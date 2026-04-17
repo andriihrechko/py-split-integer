@@ -66,7 +66,7 @@ def test_should_add_zeros_when_value_is_less_than_number_of_parts(
     (0, 10),
     (12, 24)
 ])
-def test_should_add_zeros_when_value_is_less_than_number_of_parts(
+def test_split_integer_parts_diff_not_more_than_one(
         value: int,
         parts: int
 ) -> None:
