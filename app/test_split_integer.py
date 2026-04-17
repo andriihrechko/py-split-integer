@@ -6,7 +6,10 @@ from app.split_integer import split_integer
 @pytest.mark.parametrize("value,parts", [
     (8, 1),
     (45, 4),
-    (100, 5)
+    (100, 5),
+    (6, 2),
+    (17, 4),
+    (32, 6)
 ])
 def test_sum_of_the_parts_should_be_equal_to_value(
         value: int,
@@ -25,6 +28,18 @@ def test_length_of_result_must_be_equal_parts(
         parts: int,
 ) -> None:
     assert len(split_integer(value, parts)) == parts
+
+
+@pytest.mark.parametrize("value,parts", [
+    (12, 4),
+    (121, 11),
+    (55, 5)
+])
+def test_should_split_into_equal_parts_when_value_divisible_by_parts(
+    value: int,
+    parts: int
+) -> None:
+    assert split_integer(value, parts) == [value // parts] * parts
 
 
 @pytest.mark.parametrize("value", [
@@ -50,25 +65,24 @@ def test_parts_should_be_sorted_when_they_are_not_equal(
 
 @pytest.mark.parametrize("value,parts", [
     (4, 5),
-    (0, 10),
+    (1, 10),
     (12, 24)
 ])
 def test_should_add_zeros_when_value_is_less_than_number_of_parts(
         value: int,
         parts: int
 ) -> None:
-    expected_nulls_count = parts - value
-    assert split_integer(value, parts).count(0) == expected_nulls_count
+    assert split_integer(value, parts).count(0) == parts - value
 
 
 @pytest.mark.parametrize("value,parts", [
-    (4, 5),
-    (0, 10),
-    (12, 24)
+    (15, 4),
+    (131, 12),
+    (10, 9)
 ])
 def test_split_integer_parts_diff_not_more_than_one(
         value: int,
         parts: int
 ) -> None:
-    value = split_integer(value, parts)
-    assert max(value) - min(value) <= 1
+    parts_list = split_integer(value, parts)
+    assert max(parts_list) - min(parts_list) <= 1
